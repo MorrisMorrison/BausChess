@@ -6,6 +6,7 @@ using BausChess.Core;
 using Microsoft.Xna.Framework;
 using ChessEngine.Core;
 using System.Linq;
+using System;
 
 namespace BausChess.Utils
 {
@@ -34,6 +35,13 @@ namespace BausChess.Utils
             return new Vector2(x, y);
         }
 
+        public static Vector2 GetTileCenter(TileView tile, int tileSize, int pieceSize){
+            float x = (tile.Position.X + ((tileSize - pieceSize) /2));   
+            float y = (tile.Position.Y + ((tileSize - pieceSize) /2));
+
+            return new Vector2(x,y);
+        }
+
         public static TileView FindTileForMove(Move move, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
         {
             float xFrom = startingPosition.X + (move.Coordinates.Column * tileSize) ;
@@ -43,6 +51,23 @@ namespace BausChess.Utils
             float yto = startingPosition.Y + (move.Coordinates.Row * tileSize) + pieceSize;
 
             return tiles.FirstOrDefault(p_tile => p_tile.Position.X >= xFrom && p_tile.Position.X <= xTo && p_tile.Position.Y >= yFrom && p_tile.Position.Y <= yto);
+        }
+
+
+        public static TileView FindTileForMove(Vector2 position, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        {
+            return tiles.FirstOrDefault(tile => position.X.CheckRange(tile.Position.X, tile.Position.X + tileSize) && position.Y.CheckRange(tile.Position.Y, tile.Position.Y + tileSize));
+        }
+
+        public static IList<TileView> FindValidTiles(BoardView boardView, IPieceView pieceView, Vector2 startPosition, int tileSize, int pieceSize ){
+             IList<Coordinates> validMoves = boardView.Board.FindValidMoves(pieceView.Piece);
+             return FindTilesForMoves(validMoves.Select(coordinates => new Move(pieceView.Piece, coordinates)).ToList(), boardView.Tiles, startPosition, tileSize, pieceSize);
+        }
+
+        public static bool IsValidPosition(BoardView boardView, Vector2 startingPosition, Vector2 currentPosition, int tileSize, IPieceView selectedPiece, int pieceSize)
+        {
+            return FindValidTiles(boardView, selectedPiece, startingPosition, tileSize, pieceSize)
+            .Any(tile => currentPosition.X.CheckRange(tile.Position.X , tile.Position.X + tileSize) && currentPosition.Y.CheckRange(tile.Position.Y, tile.Position.Y + tileSize));
         }
 
         public static IList<TileView> FindTilesForMoves(IList<Move> moves, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
@@ -67,5 +92,15 @@ namespace BausChess.Utils
         {
             return pieces.FirstOrDefault(piece => IsPieceSelected(piece, mousePosition));
         }
+
+        public static bool IsInBoardRange(Vector2 startingPosition ,Vector2 mousePosition, int tileSize){
+            float xFrom = startingPosition.X;
+            float xTo = startingPosition.X + (8 * tileSize);
+            float yFrom = startingPosition.Y;
+            float yto = startingPosition.Y + (8 * tileSize);
+            return mousePosition.X >= xFrom && mousePosition.X <= xTo && mousePosition.Y >= yFrom && mousePosition.Y <= yto;
+        }
+
+
     }
 }

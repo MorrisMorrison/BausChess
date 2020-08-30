@@ -70,7 +70,7 @@ namespace BausChess
                 Exit();
 
             _mouseInfo.Update(Mouse.GetState());
-            _dragAndDropManager.Update(_mouseInfo, _boardView.Pieces);
+            _dragAndDropManager.Update(_mouseInfo, _boardView.Pieces, _startPosition, _tileSize, _boardView, _pieceSize);
 
             // check if piece is clicked
             bool isClicked = _mouseInfo.PreviousLeftButtonState == ButtonState.Pressed && _mouseInfo.CurrentLeftButtonState == ButtonState.Released;
