@@ -20,6 +20,12 @@ namespace BausChess
         private BoardView _boardView { get; set; }
         private MouseInfo _mouseInfo { get; set; }
         private DragAndDropManager _dragAndDropManager { get; set; }
+        private int _screenHeight = 692;
+        private int _screenWidth = 1024;
+        private int _tileSize = 64;
+        private int _pieceSize = 32;
+        private Vector2 _startPosition;
+
 
 
         public Game1()
@@ -30,12 +36,13 @@ namespace BausChess
             _mouseInfo = new MouseInfo();
             _dragAndDropManager = new DragAndDropManager();
             _boardView = new BoardView();
+            _startPosition = new Vector2((_screenWidth - (8 * _tileSize)) / 2, (_screenHeight - (8 * _tileSize)) / 2);
         }
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 1024;
-            _graphics.PreferredBackBufferHeight = 690;
+            _graphics.PreferredBackBufferWidth = _screenWidth;
+            _graphics.PreferredBackBufferHeight = _screenHeight;
             _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
 
@@ -47,6 +54,14 @@ namespace BausChess
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             LoadBoard();
             LoadPieces();
+            LoadPiecesPositions();
+        }
+
+        private void LoadPiecesPositions()
+        {
+            foreach(IPieceView piece in _boardView.Pieces){
+                piece.Position = ViewUtils.ParsePosition(piece, _boardView.Tiles, _startPosition, _tileSize, _pieceSize);
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -57,6 +72,17 @@ namespace BausChess
             _mouseInfo.Update(Mouse.GetState());
             _dragAndDropManager.Update(_mouseInfo, _boardView.Pieces);
 
+            // check if piece is clicked
+            bool isClicked = _mouseInfo.PreviousLeftButtonState == ButtonState.Pressed && _mouseInfo.CurrentLeftButtonState == ButtonState.Released;
+            IPieceView selectedPiece = ViewUtils.GetSelectedPiece(_boardView.Pieces, _mouseInfo.CurrentPosition);
+            if (isClicked && selectedPiece != null){
+                IList<Coordinates> validMoves = _boardView.Board.FindValidMoves(selectedPiece.Piece);
+                IList<TileView> tiles = ViewUtils.FindTilesForMoves(validMoves.Select(coordinates => new Move(selectedPiece.Piece, coordinates)).ToList(), _boardView.Tiles, _startPosition, _tileSize, _pieceSize);
+                foreach (TileView tile in tiles){
+                    tile.Color = XNAColor.Red;
+                }
+            }
+            // if true display valid moves
 
             base.Update(gameTime);
         }
@@ -80,6 +106,7 @@ namespace BausChess
         {
             foreach (BoardCell cell in _boardView.Board.Cells)
             {
+
                 if (cell.Piece != null)
                 {
                     switch (cell.Piece.Type)
@@ -114,26 +141,28 @@ namespace BausChess
             {
                 for (int j = 1; j < 9; j++)
                 {
+                    Vector2 position = new Vector2(_startPosition.X + ( (i-1) * _tileSize), _startPosition.Y + ((j-1) * _tileSize));
+
                     if (i == 1 || i % 2 != 0)
                     {
                         if (j == 1 || j % 2 != 0)
                         {
-                            _boardView.Tiles.Add(new TileView(new Vector2(i * 64, j * 64), Content.Load<Texture2D>("Tile"), XNAColor.LightGray));
+                            _boardView.Tiles.Add(new TileView(position, Content.Load<Texture2D>("Tile"), XNAColor.LightGray));
                         }
                         else
                         {
-                            _boardView.Tiles.Add(new TileView(new Vector2(i * 64, j * 64), Content.Load<Texture2D>("Tile"), XNAColor.Brown));
+                            _boardView.Tiles.Add(new TileView(position, Content.Load<Texture2D>("Tile"), XNAColor.Brown));
                         }
                     }
                     else
                     {
                         if (j == 1 || j % 2 != 0)
                         {
-                            _boardView.Tiles.Add(new TileView(new Vector2(i * 64, j * 64), Content.Load<Texture2D>("Tile"), XNAColor.Brown));
+                            _boardView.Tiles.Add(new TileView(position, Content.Load<Texture2D>("Tile"), XNAColor.Brown));
                         }
                         else
                         {
-                            _boardView.Tiles.Add(new TileView(new Vector2(i * 64, j * 64), Content.Load<Texture2D>("Tile"), XNAColor.White));
+                            _boardView.Tiles.Add(new TileView(position, Content.Load<Texture2D>("Tile"), XNAColor.LightGray));
                         }
 
                     }
@@ -150,7 +179,9 @@ namespace BausChess
         {
             foreach (IPieceView piece in _boardView.Pieces)
             {
-                _spriteBatch.Draw(piece.Texture, piece.Position, piece.Color);
+                // _spriteBatch.Draw(piece.Texture, piece.Position, piece.Color);
+                _spriteBatch.Draw(piece.Texture, piece.Position, null, piece.Color, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
+
             }
         }
 
@@ -158,7 +189,8 @@ namespace BausChess
         {
             foreach (TileView tileView in _boardView.Tiles)
             {
-                _spriteBatch.Draw(tileView.Texture, tileView.Position, tileView.Color);
+                // _spriteBatch.Draw(tileView.Texture, tileView.Position, tileView.Color);
+                _spriteBatch.Draw(tileView.Texture, tileView.Position, null, tileView.Color, 0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0f);
             }
         }
 

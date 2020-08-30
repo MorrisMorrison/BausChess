@@ -33,6 +33,9 @@ namespace BausChess.Core
 
             if (SelectedPiece != null && mouseInfo.CurrentLeftButtonState == ButtonState.Released)
             {
+                // check if its a valid drop position;
+                // if false return to origin position
+
                 SelectedPiece.Position = mouseInfo.CurrentPosition;
                 SelectedPiece = null;
             }

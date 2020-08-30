@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_.19.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p=".gitignore" t="Include" />
+      <e p="Assets" t="Include">
+        <e p="Bishop.aseprite" t="Include" />
+        <e p="Bishop.png" t="Include" />
+        <e p="BishopAnimation.json" t="Include" />
+        <e p="King.aseprite" t="Include" />
+        <e p="King.png" t="Include" />
+        <e p="KingAnimation.json" t="Include" />
+        <e p="Knight.aseprite" t="Include" />
+        <e p="Knight.png" t="Include" />
+        <e p="KnightAnimation.json" t="Include" />
+        <e p="Pawn.aseprite" t="Include" />
+        <e p="Pawn.png" t="Include" />
+        <e p="PawnAnimation.json" t="Include" />
+        <e p="Queen.aseprite" t="Include" />
+        <e p="Queen.png" t="Include" />
+        <e p="QueenAnimation.json" t="Include" />
+        <e p="Rook.aseprite" t="Include" />
+        <e p="Rook.png" t="Include" />
+        <e p="RookAnimation.json" t="Include" />
+        <e p="Tile.aseprite" t="Include" />
+        <e p="Tile.png" t="Include" />
+        <e p="TileAnimation.json" t="Include" />
+      </e>
+      <e p="BausChess.csproj" t="IncludeRecursive" />
+      <e p="Content" t="Include">
+        <e p="Content.mgcb" t="Include" />
+        <e p="King.png" t="Include" />
+        <e p="bin" t="Include">
+          <e p="DesktopGL" t="Include">
+            <e p="Bishop.xnb" t="Include" />
+            <e p="Content" t="Include">
+              <e p="Bishop.xnb" t="Include" />
+              <e p="King.xnb" t="Include" />
+              <e p="Knight.xnb" t="Include" />
+              <e p="Pawn.xnb" t="Include" />
+              <e p="Queen.xnb" t="Include" />
+              <e p="Rook.xnb" t="Include" />
+              <e p="Tile.xnb" t="Include" />
+            </e>
+            <e p="King.xnb" t="Include" />
+            <e p="Knight.xnb" t="Include" />
+            <e p="Pawn.xnb" t="Include" />
+            <e p="Queen.xnb" t="Include" />
+            <e p="Rook.xnb" t="Include" />
+            <e p="Tile.xnb" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="Include">
+          <e p="DesktopGL" t="Include">
+            <e p=".mgcontent" t="Include" />
+            <e p=".mgstats" t="Include" />
+            <e p="Bishop.mgcontent" t="Include" />
+            <e p="Content" t="Include">
+              <e p=".mgcontent" t="Include" />
+              <e p=".mgstats" t="Include" />
+              <e p="Bishop.mgcontent" t="Include" />
+              <e p="King.mgcontent" t="Include" />
+              <e p="Knight.mgcontent" t="Include" />
+              <e p="Pawn.mgcontent" t="Include" />
+              <e p="Queen.mgcontent" t="Include" />
+              <e p="Rook.mgcontent" t="Include" />
+              <e p="Tile.mgcontent" t="Include" />
+            </e>
+            <e p="King.mgcontent" t="Include" />
+            <e p="Knight.mgcontent" t="Include" />
+            <e p="Pawn.mgcontent" t="Include" />
+            <e p="Queen.mgcontent" t="Include" />
+            <e p="Rook.mgcontent" t="Include" />
+            <e p="Tile.mgcontent" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Core" t="Include">
+        <e p="BoardView.cs" t="Include" />
+        <e p="DragAndDropManager.cs" t="Include" />
+        <e p="IPieceView.cs" t="Include" />
+        <e p="MouseInfo.cs" t="Include" />
+        <e p="TileView.cs" t="Include" />
+      </e>
+      <e p="Game1.cs" t="Include" />
+      <e p="Icon.bmp" t="Include" />
+      <e p="Icon.ico" t="Include" />
+      <e p="Microsoft.Xna.Framework.Content.ContentTypeReader" t="Include" />
+      <e p="Program.cs" t="Include" />
+      <e p="Utils" t="Include">
+        <e p="NumberExtensions.cs" t="Include" />
+        <e p="ViewUtils.cs" t="Include" />
+      </e>
+      <e p="app.manifest" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp3.1" t="Include">
+            <e p="BausChess.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
