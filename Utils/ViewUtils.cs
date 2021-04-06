@@ -17,6 +17,11 @@ namespace BausChess.Utils
             return color == ChessEngineColor.WHITE ? XNAColor.White : XNAColor.Black;
         }
 
+        // Parse Move to Position
+        // Parse Coordinates to Position
+        // Parse Position to Coordinates
+        // Parse Position to Move
+
         public static Vector2 ParsePosition(IPieceView piece, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
         {
             Coordinates coordinates = piece.Piece.Coordinates;
@@ -84,11 +89,11 @@ namespace BausChess.Utils
 
         public static bool IsPieceSelected(IPieceView piece, Vector2 mousePosition)
         {
-            return mousePosition.X.CheckRange(piece.Position.X, piece.Position.X + piece.Texture.Width)
-                             && mousePosition.Y.CheckRange(piece.Position.Y, piece.Position.Y + piece.Texture.Height);
+            return mousePosition.X.CheckRange(piece.Position.X - 10, piece.Position.X + piece.Texture.Width + 10)
+                             && mousePosition.Y.CheckRange(piece.Position.Y -  10, piece.Position.Y + piece.Texture.Height +10 );
         }
 
-        public static IPieceView GetSelectedPiece(IList<IPieceView> pieces, Vector2 mousePosition)
+        public static IPieceView? GetSelectedPiece(IList<IPieceView> pieces, Vector2 mousePosition)
         {
             return pieces.FirstOrDefault(piece => IsPieceSelected(piece, mousePosition));
         }

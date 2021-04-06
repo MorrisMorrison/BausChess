@@ -18,14 +18,15 @@ namespace BausChess.Core
         public IPiece Piece {get;set;}
         public Vector2 Position { get; set; }
         public Texture2D Texture { get; set; }
-
         public Color Color {get;set;}
+        public int Size { get; set; }
 
-        public PieceView(IPiece piece, Vector2 position, Texture2D texture, Color color){
+        public PieceView(IPiece piece, Vector2 position, Texture2D texture, Color color, int size){
             Piece = piece;
             Position = position;
             Texture = texture;
             Color = color;
+            Size = size;
         }
     }
 }

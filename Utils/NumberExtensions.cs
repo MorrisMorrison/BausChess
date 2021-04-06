@@ -4,6 +4,6 @@ namespace BausChess.Utils
     {
         public static bool CheckRange(this float toCheck, float from, float to){
             return (toCheck >= from && toCheck <= to);
-        }
+        }    
     }
 }

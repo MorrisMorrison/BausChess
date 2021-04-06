@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessEngine", "..\ChessEngine\ChessEngine.csproj", "{0CF56020-77C5-4CD6-BEB9-080ACFECBA55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BausChess", "BausChess.csproj", "{EC8C33F8-ABB2-488D-985C-1925A8735F56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CF56020-77C5-4CD6-BEB9-080ACFECBA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF56020-77C5-4CD6-BEB9-080ACFECBA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF56020-77C5-4CD6-BEB9-080ACFECBA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF56020-77C5-4CD6-BEB9-080ACFECBA55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC8C33F8-ABB2-488D-985C-1925A8735F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8C33F8-ABB2-488D-985C-1925A8735F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8C33F8-ABB2-488D-985C-1925A8735F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8C33F8-ABB2-488D-985C-1925A8735F56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

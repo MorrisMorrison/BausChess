@@ -25,10 +25,15 @@
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+    <ProjectReference Include="../ChessEngine/ChessEngine.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../ChessEngine/ChessEngine.csproj" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Utilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Utilities\Utilities\bin\Debug\netcoreapp3.0\Utilities.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
