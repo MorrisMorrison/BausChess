@@ -1,9 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BausChess.Utils;
 using ChessEngine.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Utilities.Collections;
 using Color = Microsoft.Xna.Framework.Color;
 
 namespace BausChess.Core
@@ -12,13 +15,18 @@ namespace BausChess.Core
     public interface IBoardView
     {
         IList<IPieceView> Pieces { get; set; }
+        IList<ITileView> Tiles { get; set; }
         Board Board { get; set; }
+        void MakeMove(IPieceView piece, ITileView tile);
+        public int TileSize { get; set; }
+        public int PieceSize { get; set; }
+        IList<ITileView> FindValidTiles(IPieceView piece);
     }
-    public class BoardView
+    public class BoardView:IBoardView
     {
         public Board Board { get; set; }
         public IList<IPieceView> Pieces { get; set; }
-        public IList<TileView> Tiles { get; set; }
+        public IList<ITileView> Tiles { get; set; }
         public Vector2 StartPosition { get; set; }
         public int TileSize { get; set; }
         public int PieceSize { get; set; }
@@ -28,7 +36,7 @@ namespace BausChess.Core
         {
             Board = new Board();
             Pieces = new List<IPieceView>();
-            Tiles = new List<TileView>();
+            Tiles = new List<ITileView>();
             StartPosition = startPosition;
             TileSize = tileSize;
             PieceSize = pieceSize;
@@ -80,15 +88,51 @@ namespace BausChess.Core
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        
+        public void MakeMove(IPieceView piece, ITileView tile)
         {
+            // make move in underlying board
+            Board.Move(piece.Piece, tile.BoardCell.Coordinates);
+            
+            // update piece position
+            piece.Position = ViewUtils.GetTileCenter(tile, TileSize, PieceSize);
 
+            // remove piece from old tile
+            ITileView oldTile = FindTileByPiece(piece);
+            oldTile.Piece = null;
+
+            // add piece to new tile
+            tile.Piece = piece;
         }
 
-    }
+        public IList<ITileView> FindValidTiles(IPieceView piece)
+        {
+            IList<Coordinates> validMovesCoordinates = Board.FindValidMoves(piece.Piece);
+            return FindTilesByCoordinates(validMovesCoordinates);
+        }
+        private IList<ITileView> FindTilesByCoordinates(IList<Coordinates> moveCoordinates)
+        {
+            IList<ITileView> tiles = new List<ITileView>();
+            
+            moveCoordinates.Each(coordinates =>
+            {
+                ITileView? tile = FindTileByCoordinates(coordinates);
+                if (tile != null) tiles.Add(tile);
+            });
 
-    public class BoardLogic
-    {
+            return tiles;
+        }
+        private  ITileView? FindTileByCoordinates(Coordinates coordinates)
+        {
+            float xFrom = StartPosition.X + (coordinates.Column * TileSize) ;
+            float xTo = StartPosition.X + (coordinates.Column * TileSize) +  PieceSize;
 
+            float yFrom = StartPosition.Y + (coordinates.Row * TileSize) ;
+            float yto = StartPosition.Y + (coordinates.Row * TileSize) + PieceSize;
+
+            return Tiles.FirstOrDefault(tile => tile.Position.X >= xFrom && tile.Position.X <= xTo && tile.Position.Y >= yFrom && tile.Position.Y <= yto);
+        }
+        private ITileView FindTileByPiece(IPieceView piece) => Tiles.FirstOrDefault(tile => tile.Piece == piece);
     }
-}
+        
+    }

@@ -17,12 +17,19 @@ namespace BausChess.Utils
             return color == ChessEngineColor.WHITE ? XNAColor.White : XNAColor.Black;
         }
 
-        // Parse Move to Position
-        // Parse Coordinates to Position
+        // Parse Coordinates to Vector2
         // Parse Position to Coordinates
         // Parse Position to Move
 
-        public static Vector2 ParsePosition(IPieceView piece, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        
+        public static Vector2 ParsePosition(Coordinates coordinates, IList<ITileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        {
+            float x = startingPosition.X + (coordinates.Column * tileSize) + ((tileSize - pieceSize) / 2);
+            float y = startingPosition.Y + (coordinates.Row * tileSize) + ((tileSize - pieceSize) / 2);
+            return new Vector2(x, y);
+        }
+        
+        public static Vector2 ParsePosition(IPieceView piece, IList<ITileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
         {
             Coordinates coordinates = piece.Piece.Coordinates;
             float x = startingPosition.X + (coordinates.Column * tileSize) + ((tileSize - pieceSize) / 2);
@@ -31,7 +38,7 @@ namespace BausChess.Utils
             return new Vector2(x, y);
         }
 
-        public static Vector2 ParsePosition(Move move, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        public static Vector2 ParsePosition(Move move, IList<ITileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
         {
             Coordinates coordinates = move.Coordinates;
             float x = startingPosition.X + (coordinates.Column * tileSize) + ((tileSize - pieceSize) / 2);
@@ -40,14 +47,14 @@ namespace BausChess.Utils
             return new Vector2(x, y);
         }
 
-        public static Vector2 GetTileCenter(TileView tile, int tileSize, int pieceSize){
+        public static Vector2 GetTileCenter(ITileView tile, int tileSize, int pieceSize){
             float x = (tile.Position.X + ((tileSize - pieceSize) /2));   
             float y = (tile.Position.Y + ((tileSize - pieceSize) /2));
 
             return new Vector2(x,y);
         }
 
-        public static TileView FindTileForMove(Move move, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        public static ITileView FindTileForMove(Move move, IList<ITileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
         {
             float xFrom = startingPosition.X + (move.Coordinates.Column * tileSize) ;
             float xTo = startingPosition.X + (move.Coordinates.Column * tileSize) +  pieceSize;
@@ -57,14 +64,25 @@ namespace BausChess.Utils
 
             return tiles.FirstOrDefault(p_tile => p_tile.Position.X >= xFrom && p_tile.Position.X <= xTo && p_tile.Position.Y >= yFrom && p_tile.Position.Y <= yto);
         }
+        
+        public static ITileView FindTileByCoordinates(Coordinates coordinates, IList<ITileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        {
+            float xFrom = startingPosition.X + (coordinates.Column * tileSize) ;
+            float xTo = startingPosition.X + (coordinates.Column * tileSize) +  pieceSize;
+
+            float yFrom = startingPosition.Y + (coordinates.Row * tileSize) ;
+            float yto = startingPosition.Y + (coordinates.Row * tileSize) + pieceSize;
+
+            return tiles.FirstOrDefault(p_tile => p_tile.Position.X >= xFrom && p_tile.Position.X <= xTo && p_tile.Position.Y >= yFrom && p_tile.Position.Y <= yto);
+        }
 
 
-        public static TileView FindTileForMove(Vector2 position, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        public static ITileView? FindTileForMove(Vector2 position, IList<ITileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
         {
             return tiles.FirstOrDefault(tile => position.X.CheckRange(tile.Position.X, tile.Position.X + tileSize) && position.Y.CheckRange(tile.Position.Y, tile.Position.Y + tileSize));
         }
 
-        public static IList<TileView> FindValidTiles(BoardView boardView, IPieceView pieceView, Vector2 startPosition, int tileSize, int pieceSize ){
+        public static IList<ITileView> FindValidTiles(BoardView boardView, IPieceView pieceView, Vector2 startPosition, int tileSize, int pieceSize ){
              IList<Coordinates> validMoves = boardView.Board.FindValidMoves(pieceView.Piece);
              return FindTilesForMoves(validMoves.Select(coordinates => new Move(pieceView.Piece, coordinates)).ToList(), boardView.Tiles, startPosition, tileSize, pieceSize);
         }
@@ -75,9 +93,9 @@ namespace BausChess.Utils
             .Any(tile => currentPosition.X.CheckRange(tile.Position.X , tile.Position.X + tileSize) && currentPosition.Y.CheckRange(tile.Position.Y, tile.Position.Y + tileSize));
         }
 
-        public static IList<TileView> FindTilesForMoves(IList<Move> moves, IList<TileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
+        public static IList<ITileView> FindTilesForMoves(IList<Move> moves, IList<ITileView> tiles, Vector2 startingPosition, int tileSize, int pieceSize)
         {
-            IList<TileView> relevantTiles = new List<TileView>();
+            IList<ITileView> relevantTiles = new List<ITileView>();
 
             foreach (Move move in moves)
             {

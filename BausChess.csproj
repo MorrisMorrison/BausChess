@@ -30,8 +30,12 @@
   <ItemGroup>
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="SimpleConfigAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\SimpleConfigAccess\SimpleConfigAccess\bin\Debug\netcoreapp3.1\SimpleConfigAccess.dll</HintPath>
+    </Reference>
     <Reference Include="Utilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Utilities\Utilities\bin\Debug\netcoreapp3.0\Utilities.dll</HintPath>
     </Reference>
