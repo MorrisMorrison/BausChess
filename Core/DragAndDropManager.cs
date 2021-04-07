@@ -84,6 +84,8 @@ namespace BausChess.Core
                 {
                     tile.DisplayColor = XNAColor.Red;
                 }
+
+                _selectedPiece = null;
             }
             #endregion
 
